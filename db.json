@@ -1,0 +1,102 @@
+{
+  "menu": [
+    { 
+      "id": "1", 
+      "name": "Special Kitfo", 
+      "price": 450, 
+      "ingredients": "Prime Beef, Mitmita, Chili, Niter Kibbeh",
+      "image": "https://images.pexels.com/photos/18241320/pexels-photo-18241320.jpeg" 
+    },
+    { 
+      "id": "2", 
+      "name": "Doro Wat", 
+      "price": 550, 
+      "ingredients": "Chicken, Berbere, Onions, Garlic, Hard-boiled Egg",
+      "image": "https://images.pexels.com/photos/18241315/pexels-photo-18241315.jpeg" 
+    },
+    { 
+      "id": "3", 
+      "name": "Beyaynet", 
+      "price": 300, 
+      "ingredients": "Lentils, Chickpeas, Cabbage, Carrots, Shiro",
+      "image": "https://images.pexels.com/photos/11115802/pexels-photo-11115802.jpeg" 
+    },
+    { 
+      "id": "4", 
+      "name": "Beef Shekla Tibs", 
+      "price": 600, 
+      "ingredients": "Beef, Rosemary, Jalapeños, Red Onion",
+      "image": "https://images.pexels.com/photos/18241313/pexels-photo-18241313.jpeg" 
+    },
+    { 
+      "id": "5", 
+      "name": "Gomen be Siga", 
+      "price": 380, 
+      "ingredients": "Collard Greens, Beef, Garlic, Ginger, Niter Kibbeh",
+      "image": "https://images.pexels.com/photos/11115802/pexels-photo-11115802.jpeg" 
+    },
+    { 
+      "id": "6", 
+      "name": "Shiro Wat", 
+      "price": 250, 
+      "ingredients": "Chickpea Flour, Berbere, Garlic, Onions",
+      "image": "https://images.pexels.com/photos/18241315/pexels-photo-18241315.jpeg" 
+    },
+    { 
+      "id": "7", 
+      "name": "Yebeg Wat", 
+      "price": 500, 
+      "ingredients": "Lamb, Berbere, Niter Kibbeh, Garlic",
+      "image": "https://images.pexels.com/photos/18241320/pexels-photo-18241320.jpeg" 
+    },
+    { 
+      "id": "8", 
+      "name": "Asa Tibs", 
+      "price": 420, 
+      "ingredients": "Fish, Lemon, Black Pepper, Garlic, Cardamom",
+      "image": "https://images.pexels.com/photos/18241313/pexels-photo-18241313.jpeg" 
+    },
+    { 
+      "id": "9", 
+      "name": "Misir Wat", 
+      "price": 280, 
+      "ingredients": "Red Lentils, Berbere, Onions, Garlic",
+      "image": "https://images.pexels.com/photos/11115802/pexels-photo-11115802.jpeg" 
+    },
+    { 
+      "id": "10", 
+      "name": "Kik Alicha", 
+      "price": 240, 
+      "ingredients": "Split Peas, Turmeric, Garlic, Ginger",
+      "image": "https://images.pexels.com/photos/18241315/pexels-photo-18241315.jpeg" 
+    },
+    { 
+      "id": "11", 
+      "name": "Butecha", 
+      "price": 180, 
+      "ingredients": "Chickpeas, Lemon, Onions, Green Chili",
+      "image": "https://images.pexels.com/photos/11115802/pexels-photo-11115802.jpeg" 
+    },
+    { 
+      "id": "12", 
+      "name": "Derek Tibs", 
+      "price": 580, 
+      "ingredients": "Beef, Rosemary, Green Pepper, Niter Kibbeh",
+      "image": "https://images.pexels.com/photos/18241313/pexels-photo-18241313.jpeg" 
+    },
+    { 
+      "id": "13", 
+      "name": "Dulet", 
+      "price": 350, 
+      "ingredients": "Tripe, Liver, Beef, Mitmita, Spiced Butter",
+      "image": "https://images.pexels.com/photos/18241320/pexels-photo-18241320.jpeg" 
+    },
+    { 
+      "id": "14", 
+      "name": "Injera Fitfit", 
+      "price": 220, 
+      "ingredients": "Injera, Tomato, Jalapeño, Red Onion, Lemon",
+      "image": "https://images.pexels.com/photos/11115802/pexels-photo-11115802.jpeg" 
+    }
+  ]
+}
