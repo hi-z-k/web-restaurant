@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { RestaurantContext } from '../context/RestaurantContext.js';
 
 const Footer = () => {
@@ -13,29 +14,32 @@ const Footer = () => {
     },
     container: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-      gap: '4rem'
+      gridTemplateAreas: `
+        "brand contact"
+      `,
+      gridTemplateColumns: '1.5fr 1fr',
+      gap: '40px 6rem',
+      alignItems: 'start'
+    },
+    brandArea: {
+      gridArea: 'brand'
+    },
+    contactArea: {
+      gridArea: 'contact'
+    },
+    tagline: {
+      color: 'var(--text-muted)', 
+      marginTop: '15px',
+      lineHeight: '1.6',
+      maxWidth: '400px'
     },
     h4: {
       fontFamily: '"Bebas Neue", cursive',
       fontSize: '1.8rem',
       letterSpacing: '2px',
-      marginBottom: '25px',
+      marginBottom: '20px',
       color: '#fff',
       textTransform: 'uppercase'
-    },
-    list: {
-      listStyle: 'none',
-      padding: 0,
-      margin: 0
-    },
-    link: {
-      color: 'var(--text-muted)',
-      textDecoration: 'none',
-      display: 'block',
-      marginBottom: '12px',
-      transition: '0.3s',
-      fontSize: '1rem'
     },
     contactText: {
       color: 'var(--text-muted)',
@@ -43,7 +47,8 @@ const Footer = () => {
     },
     socialContainer: {
       display: 'flex',
-      gap: '15px'
+      gap: '15px',
+      marginTop: '15px'
     },
     socialIcon: {
       color: 'var(--main-color)',
@@ -62,40 +67,27 @@ const Footer = () => {
 
   if (!config) return null;
 
-  const parts = config.name.split(' ');
-  const firstName = parts[0];
-  const restOfName = parts.slice(1).join(' ');
+  const [firstName, ...rest] = config.name.split(' ');
+  const restOfName = rest.join(' ');
 
   return (
     <footer style={styles.footer}>
       <div style={styles.container}>
-        <div className="footer-box">
-          <a href="/" className="logo">
+        
+        <div style={styles.brandArea}>
+          <Link to="/" className="logo">
             {firstName}<span>{restOfName}</span>
-          </a>
-          <p style={{ color: 'var(--text-muted)', marginTop: '15px' }}>
+          </Link>
+          <p style={styles.tagline}>
             {config.tagline}
           </p>
         </div>
 
-        <div className="footer-box">
-          <h4 style={styles.h4}>Quick Links</h4>
-          <ul style={styles.list}>
-            <li><a href="#home" style={styles.link}>Home</a></li>
-            <li><a href="#menu" style={styles.link}>Menu</a></li>
-            <li><a href="#chef" style={styles.link}>Our Chef</a></li>
-            <li><a href="#auth" style={styles.link}>Login</a></li>
-          </ul>
+        <div style={styles.contactArea}>
+          <h4 style={styles.h4}>Contact Info</h4>
+          <p style={styles.contactText}>Email: {config.email}</p>
         </div>
 
-        <div className="footer-box">
-          <h4 style={styles.h4}>Contact</h4>
-          <p style={styles.contactText}>Email: {config.email}</p>
-          <div style={styles.socialContainer}>
-            <a href="#" style={styles.socialIcon}><i className='bx bxl-instagram'></i></a>
-            <a href="#" style={styles.socialIcon}><i className='bx bxl-facebook'></i></a>
-          </div>
-        </div>
       </div>
 
       <div style={styles.bottom}>

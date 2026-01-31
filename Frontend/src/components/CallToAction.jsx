@@ -1,8 +1,12 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { RestaurantContext } from '../context/RestaurantContext.js';
+import { AuthContext } from '../context/AuthContext.js';
 
 const CallToAction = () => {
   const config = useContext(RestaurantContext);
+  const { isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const styles = {
     section: {
@@ -54,14 +58,10 @@ const CallToAction = () => {
     }
   };
 
-  if (!config) return null;
+  if (!config || isLoggedIn) return null;
 
-  const handleLogin = () => {
-    console.log("Login triggered");
-  };
-
-  const handleSignUp = () => {
-    console.log("Sign Up triggered");
+  const handleAuthRedirect = () => {
+    navigate('/login');
   };
 
   return (
@@ -72,10 +72,10 @@ const CallToAction = () => {
       </p>
       
       <div style={styles.buttonContainer}>
-        <button onClick={handleLogin} style={styles.primaryButton}>
+        <button onClick={handleAuthRedirect} style={styles.primaryButton}>
           Login
         </button>
-        <button onClick={handleSignUp} style={styles.secondaryButton}>
+        <button onClick={handleAuthRedirect} style={styles.secondaryButton}>
           Sign Up
         </button>
       </div>
