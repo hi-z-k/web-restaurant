@@ -1,166 +1,120 @@
-import { useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
+import MapPicker from '../components/MapPicker';
+import CartReceipt from '../components/CartReceipt';
 
 const Checkout = () => {
   const { cart, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
 
-  const subtotal = cart.reduce((acc, item) => acc + item.price * item.count, 0);
+  const [location, setLocation] = useState({ lat: 9.0249, lng: 38.7468 });
+  const [addInfo, setAddInfo] = useState('');
   const deliveryFee = 50;
-  const total = subtotal + deliveryFee;
 
   const styles = {
-    container: {
-      padding: '40px 12%',
+    page: { 
+      padding: '60px 10%', 
+      display: 'grid', 
+      gridTemplateAreas: `
+        "receipt map"
+        "receipt info"
+        "receipt button"
+      `,
+      gridTemplateColumns: '1fr 1.5fr',
+      gridTemplateRows: 'auto auto auto',
+      gap: '30px', 
       color: '#fff',
-      display: 'grid',
-      gridTemplateColumns: '1.2fr 0.8fr',
-      gap: '40px',
-      minHeight: '80vh'
+      maxWidth: '1400px',
+      margin: '0 auto',
+      alignItems: 'start'
     },
-    header: {
-      fontFamily: '"Bebas Neue", cursive',
-      fontSize: '2.5rem',
-      marginBottom: '30px',
-      gridColumn: '1 / -1'
+    receiptSection: { gridArea: 'receipt', position: 'sticky', top: '100px' },
+    mapSection: { gridArea: 'map' },
+    infoSection: { 
+      gridArea: 'info', 
+      background: 'var(--secondary-bg)', 
+      padding: '25px', 
+      borderRadius: '12px', 
+      border: '1px solid rgba(255,255,255,0.05)' 
     },
-    section: {
-      background: 'var(--secondary-bg)',
-      padding: '30px',
-      borderRadius: '12px',
-      border: '1px solid rgba(147, 112, 219, 0.15)',
-      height: 'fit-content'
+    buttonSection: { gridArea: 'button' },
+    sectionTitle: { 
+      fontFamily: '"Bebas Neue", cursive', 
+      fontSize: '2rem', 
+      marginBottom: '15px', 
+      color: 'var(--main-color)' 
     },
-    sectionTitle: {
-      marginBottom: '20px',
-      color: 'var(--main-color)'
+    mapWrapper: { height: '350px', width: '100%', borderRadius: '12px', overflow: 'hidden', border: '1px solid #333' },
+    label: { display: 'block', marginBottom: '10px', color: '#ccc' },
+    textarea: { 
+      width: '100%', padding: '15px', background: '#0a0a1a', color: '#fff', 
+      border: '1px solid #444', borderRadius: '8px', minHeight: '100px', 
+      fontSize: '1rem', fontFamily: 'inherit', resize: 'none', outline: 'none' 
     },
-    formGroup: {
-      marginBottom: '20px',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '8px'
+    btn: { 
+      width: '100%', padding: '20px', background: 'var(--main-color)', color: '#fff', 
+      border: 'none', borderRadius: '8px', cursor: 'pointer', 
+      fontFamily: '"Bebas Neue", cursive', fontSize: '1.6rem', transition: '0.3s ease' 
     },
-    input: {
-      padding: '12px',
-      borderRadius: '6px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      background: '#1a1a2e',
-      color: '#fff',
-      fontSize: '1rem'
-    },
-    summaryScroll: {
-      maxHeight: '300px',
-      overflowY: 'auto',
-      marginBottom: '20px'
-    },
-    summaryItem: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginBottom: '12px',
-      fontSize: '0.95rem',
-      color: 'rgba(255, 255, 255, 0.8)'
-    },
-    totalRow: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginTop: '20px',
-      paddingTop: '20px',
-      borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-      fontSize: '1.5rem',
-      fontWeight: 'bold',
-      color: 'var(--main-color)'
-    },
-    btn: {
-      width: '100%',
-      padding: '15px',
-      background: 'var(--main-color)',
-      color: '#fff',
-      border: 'none',
-      borderRadius: '6px',
-      cursor: 'pointer',
-      fontFamily: '"Bebas Neue", cursive',
-      fontSize: '1.3rem',
-      marginTop: '20px',
-      transition: '0.3s'
-    },
-    emptyContainer: {
-      textAlign: 'center',
-      padding: '100px 12%',
-      color: '#fff'
-    }
+    emptyMessage: { textAlign: 'center', padding: '100px', color: '#fff' }
   };
 
-  const handleOrder = (e) => {
+  const handlePlaceOrder = (e) => {
     e.preventDefault();
-    alert('Order Received! We are preparing your food.');
+    
+    const orderData = {
+      items: cart,
+      coordinates: location,
+      preferences: addInfo,
+      summary: {
+        subtotal: cart.reduce((acc, i) => acc + i.price * i.count, 0),
+        fee: deliveryFee,
+        finalTotal: cart.reduce((acc, i) => acc + i.price * i.count, 0) + deliveryFee
+      }
+    };
+
+    console.log("Finalizing Order:", orderData);
+    alert("Order successfully placed!");
     clearCart();
     navigate('/');
   };
 
-  if (cart.length === 0) {
-    return (
-      <div style={styles.emptyContainer}>
-        <h2 style={{ fontFamily: '"Bebas Neue", cursive', fontSize: '3rem' }}>Your Cart is Empty</h2>
-        <p>Add some delicious items to get started.</p>
-        <Link to="/menu">
-          <button style={{ ...styles.btn, width: '200px' }}>Go to Menu</button>
-        </Link>
-      </div>
-    );
-  }
+  if (cart.length === 0) return (
+    <div style={styles.emptyMessage}>
+      <h2 style={styles.sectionTitle}>Your cart is empty.</h2>
+    </div>
+  );
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.header}>Complete Your Order</h1>
-
-      <div style={styles.section}>
-        <h3 style={styles.sectionTitle}>Delivery Information</h3>
-        <form onSubmit={handleOrder}>
-          <div style={styles.formGroup}>
-            <label>Full Name</label>
-            <input style={styles.input} type="text" required placeholder="Abebe Bikila" />
-          </div>
-          <div style={styles.formGroup}>
-            <label>Phone Number</label>
-            <input style={styles.input} type="tel" required placeholder="+251 9..." />
-          </div>
-          <div style={styles.formGroup}>
-            <label>Detailed Address</label>
-            <textarea 
-              style={{ ...styles.input, minHeight: '100px', resize: 'vertical' }} 
-              required 
-              placeholder="Bole, Around Edna Mall..." 
-            />
-          </div>
-          <button type="submit" style={styles.btn}>Place Order</button>
-        </form>
+    <div style={styles.page}>
+      <div style={styles.receiptSection}>
+        <h2 style={styles.sectionTitle}>Order Summary</h2>
+        <CartReceipt cart={cart} deliveryFee={deliveryFee} />
       </div>
 
-      <div style={styles.section}>
-        <h3 style={styles.sectionTitle}>Order Summary</h3>
-        <div style={styles.summaryScroll}>
-          {cart.map(item => (
-            <div key={item.id} style={styles.summaryItem}>
-              <span>{item.count}x {item.name}</span>
-              <span>{item.price * item.count} ETB</span>
-            </div>
-          ))}
+      <div style={styles.mapSection}>
+        <h2 style={styles.sectionTitle}>Delivery Point</h2>
+        <div style={styles.mapWrapper}>
+          <MapPicker location={location} setLocation={setLocation} />
         </div>
-        
-        <div style={styles.summaryItem}>
-          <span>Subtotal</span>
-          <span>{subtotal} ETB</span>
-        </div>
-        <div style={styles.summaryItem}>
-          <span>Delivery Fee</span>
-          <span>{deliveryFee} ETB</span>
-        </div>
-        <div style={styles.totalRow}>
-          <span>Total</span>
-          <span>{total} ETB</span>
-        </div>
+      </div>
+
+      <div style={styles.infoSection}>
+        <h2 style={styles.sectionTitle}>Additional Info</h2>
+        <label style={styles.label}>Order Preferences & Instructions</label>
+        <textarea 
+          style={styles.textarea}
+          placeholder="Allergy requests, delivery notes, or kitchen preferences..."
+          value={addInfo}
+          onChange={(e) => setAddInfo(e.target.value)}
+        />
+      </div>
+
+      <div style={styles.buttonSection}>
+        <button onClick={handlePlaceOrder} style={styles.btn}>
+          CONFIRM ORDER
+        </button>
       </div>
     </div>
   );
