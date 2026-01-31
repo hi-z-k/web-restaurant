@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { fetchOrdersByDate, updateOrderStatus } from '../services/api';
+import { fetchOrdersByDate, updateOrderStatus } from '../services/api.js';
 
 const styles = {
   container: { padding: '40px 12%', color: '#fff', background: 'var(--primary-bg)', minHeight: '100vh' },
