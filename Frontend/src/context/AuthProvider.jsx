@@ -1,35 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
 
 export const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = useState(() => {
+  const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('user');
-    return {
-      user: savedUser ? JSON.parse(savedUser) : null,
-      isLoggedIn: !!savedUser
-    };
+    return savedUser ? JSON.parse(savedUser) : null;
   });
 
+  const isLoggedIn = !!user;
+  const isAdmin = user?.role === 'admin';
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [user]);
+
   const login = (userData) => {
-    localStorage.setItem('user', JSON.stringify(userData));
-    setAuthState({
-      user: userData,
-      isLoggedIn: true
-    });
+    setUser(userData);
   };
 
   const logout = () => {
-    localStorage.removeItem('user');
-    setAuthState({
-      user: null,
-      isLoggedIn: false
-    });
+    setUser(null);
   };
 
   return (
     <AuthContext.Provider value={{ 
-      user: authState.user, 
-      isLoggedIn: authState.isLoggedIn, 
+      user, 
+      isLoggedIn, 
+      isAdmin, 
       login, 
       logout 
     }}>

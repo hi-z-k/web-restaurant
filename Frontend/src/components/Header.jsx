@@ -4,6 +4,77 @@ import { RestaurantContext } from '../context/RestaurantContext.js';
 import { CartContext } from '../context/CartContext.js';
 import { AuthContext } from '../context/AuthContext.js';
 
+const UserBadge = ({ user, onLogout }) => {
+  const isAdmin = user?.role === 'admin';
+  const badgeStyles = {
+    container: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      marginLeft: '15px',
+      padding: '6px 14px',
+      borderRadius: '30px',
+      background: 'rgba(255, 255, 255, 0.03)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      transition: '0.3s'
+    },
+    avatar: {
+      width: '35px',
+      height: '35px',
+      borderRadius: '50%',
+      background: 'var(--main-color)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: '1rem',
+      boxShadow: '0 0 15px rgba(147, 112, 219, 0.3)'
+    },
+    details: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center'
+    },
+    name: {
+      color: '#fff',
+      fontSize: '0.85rem',
+      fontWeight: '600',
+      lineHeight: '1.2'
+    },
+    phone: {
+      color: 'var(--text-muted)',
+      fontSize: '0.7rem',
+      letterSpacing: '0.5px'
+    },
+    logout: {
+      background: 'transparent',
+      border: 'none',
+      color: '#ff4d4d',
+      cursor: 'pointer',
+      fontSize: '0.7rem',
+      padding: '0',
+      textDecoration: 'none',
+      marginTop: '2px',
+      opacity: '0.8',
+      textAlign: 'left'
+    }
+  };
+
+const firstName = user?.name ? user.name.split(' ')[0] : 'User';
+  const initial = firstName.charAt(0).toUpperCase();
+
+  return (
+    <li style={badgeStyles.container}>
+      <div style={badgeStyles.avatar}>{initial}</div>
+      <div style={badgeStyles.details}>
+        <span style={badgeStyles.name}>{firstName} {isAdmin && "(Admin)"}</span>
+        {!isAdmin && <span style={badgeStyles.phone}>{user?.phone}</span>}
+        <button onClick={onLogout} style={badgeStyles.logout}>Logout</button>
+      </div>
+    </li>
+  );};
+
 const Header = () => {
   const config = useContext(RestaurantContext);
   const { cart } = useContext(CartContext);
@@ -50,59 +121,18 @@ const Header = () => {
       fontSize: '0.8rem',
       marginLeft: '5px',
       verticalAlign: 'middle'
-    },
-    userSection: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '12px',
-      marginLeft: '15px',
-      padding: '5px 10px',
-      borderRadius: '20px',
-      background: 'rgba(255, 255, 255, 0.05)'
-    },
-    profileIcon: {
-      width: '32px',
-      height: '32px',
-      borderRadius: '50%',
-      background: 'var(--main-color)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: '#fff',
-      fontWeight: 'bold',
-      fontSize: '0.9rem'
-    },
-    userInfo: { 
-      display: 'flex', 
-      flexDirection: 'column' 
-    },
-    userName: {
-      color: '#fff',
-      fontSize: '0.9rem',
-      fontWeight: '500'
-    },
-    logoutBtn: {
-      background: 'transparent',
-      border: 'none',
-      color: '#ff4d4d',
-      cursor: 'pointer',
-      fontSize: '0.8rem',
-      padding: '0',
-      textDecoration: 'underline',
-      textAlign: 'left'
     }
   };
 
   if (!config) return null;
 
-  const [firstName, ...rest] = config.name.split(' ');
-  const restOfName = rest.join(' ');
-  const userInitial = user?.name ? user.name.charAt(0).toUpperCase() : 'U';
+  const [resFirstName, ...resRest] = config.name.split(' ');
+  const resRestOfName = resRest.join(' ');
 
   return (
     <header style={styles.header}>
       <Link to="/" className="logo">
-        {firstName}<span>{restOfName}</span>
+        {resFirstName}<span>{resRestOfName}</span>
       </Link>
       
       <nav>
@@ -117,13 +147,7 @@ const Header = () => {
           </li>
           
           {isLoggedIn ? (
-            <li style={styles.userSection}>
-              <div style={styles.profileIcon}>{userInitial}</div>
-              <div style={styles.userInfo}>
-                <span style={styles.userName}>{user?.name}</span>
-                <button onClick={logout} style={styles.logoutBtn}>Logout</button>
-              </div>
-            </li>
+            <UserBadge user={user} onLogout={logout} />
           ) : (
             <li>
               <NavLink to="/login" style={styles.navLink}>

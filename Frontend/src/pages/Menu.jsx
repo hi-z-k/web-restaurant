@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { fetchMenu } from '../services/api';
 import { CartContext } from '../context/CartContext';
 import MenuItem from '../components/MenuItem';
 import PaginationContainer from '../components/PaginationContainer';
@@ -8,9 +9,8 @@ const Menu = () => {
   const [menuData, setMenuData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch('http://localhost:3000/menu')
-      .then((res) => res.json())
+useEffect(() => {
+    fetchMenu()
       .then((data) => {
         setMenuData(data);
         setLoading(false);
