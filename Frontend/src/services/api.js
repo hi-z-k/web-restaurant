@@ -10,8 +10,10 @@ const sendRequest = async (url, options = {}) => {
 };
 
 export const loginUser = async (email, password) => {
-  const users = await sendRequest(`${API_URL}/users?email=${email}&password=${password}`);
-  return users[0] || null;
+  return sendRequest(`${API_URL}/login`, {
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
+  });
 };
 
 export const registerUser = async (userData) => {
@@ -23,8 +25,10 @@ export const registerUser = async (userData) => {
 };
 
 export const checkEmailExists = async (email) => {
-  const users = await sendRequest(`${API_URL}/users?email=${email}`);
-  return users.length > 0;
+  const result = await sendRequest(`${API_URL}/users/${encodeURIComponent(email)}`, {
+    method: 'POST'
+  });
+  return result.exists;
 };
 
 export const fetchMenu = () => {
