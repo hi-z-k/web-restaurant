@@ -1,10 +1,12 @@
 import { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
+import { AuthContext } from '../context/AuthContext';
 
 const MenuItem = ({ item }) => {
   const { cart, addToCart, updateCount } = useContext(CartContext);
   const cartItem = cart.find((i) => i.id === item.id);
   const count = cartItem ? cartItem.count : 0;
+  const { user } = useContext(AuthContext);
 
   const styles = {
     card: {
@@ -16,7 +18,7 @@ const MenuItem = ({ item }) => {
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
-      minHeight: '420px', 
+      minHeight: '420px',
     },
     imageContainer: {
       width: '100%',
@@ -35,7 +37,7 @@ const MenuItem = ({ item }) => {
       flexGrow: 1,
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between' 
+      justifyContent: 'space-between'
     },
     infoSection: {
       marginBottom: '15px',
@@ -59,10 +61,10 @@ const MenuItem = ({ item }) => {
       WebkitLineClamp: '3',
       WebkitBoxOrient: 'vertical',
       overflow: 'hidden',
-      minHeight: '3.6em' 
+      minHeight: '3.6em'
     },
     actionArea: {
-      marginTop: 'auto' 
+      marginTop: 'auto'
     },
     price: {
       color: '#fff',
@@ -103,7 +105,7 @@ const MenuItem = ({ item }) => {
       <div style={styles.imageContainer}>
         <img src={item.image} alt={item.name} style={styles.img} />
       </div>
-      
+
       <div style={styles.content}>
         <div style={styles.infoSection}>
           <h3 style={styles.name}>{item.name}</h3>
@@ -112,17 +114,19 @@ const MenuItem = ({ item }) => {
 
         <div style={styles.actionArea}>
           <p style={styles.price}>{item.price} ETB</p>
-          
-          {count === 0 ? (
-            <button style={styles.btn} onClick={() => addToCart(item)}>
-              Add to Order
-            </button>
-          ) : (
-            <div style={styles.controls}>
-              <button style={styles.qtyBtn} onClick={() => updateCount(item.id, -1)}>-</button>
-              <span style={{ color: '#fff', fontSize: '1.2rem', minWidth: '20px' }}>{count}</span>
-              <button style={styles.qtyBtn} onClick={() => updateCount(item.id, 1)}>+</button>
-            </div>
+
+          {user && (
+            count === 0 ? (
+              <button style={styles.btn} onClick={() => addToCart(item)}>
+                Add to Order
+              </button>
+            ) : (
+              <div style={styles.controls}>
+                <button style={styles.qtyBtn} onClick={() => updateCount(item.id, -1)}>-</button>
+                <span style={{ color: '#fff', fontSize: '1.2rem', minWidth: '20px' }}>{count}</span>
+                <button style={styles.qtyBtn} onClick={() => updateCount(item.id, 1)}>+</button>
+              </div>
+            )
           )}
         </div>
       </div>

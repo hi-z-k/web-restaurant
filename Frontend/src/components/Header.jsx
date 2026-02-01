@@ -137,26 +137,26 @@ const Header = () => {
       <Link to="/" className="logo">
         {resFirstName}<span>{resRestOfName}</span>
       </Link>
-      
+
       <nav>
         <ul style={styles.navbar}>
           {isAdmin ? (
-            <>
-              <li><NavLink to="/admin" style={navLinkStyle}>Dashboard</NavLink></li>
-            </>
+            <li><NavLink to="/admin" style={navLinkStyle}>Dashboard</NavLink></li>
           ) : (
             <>
               <li><NavLink to="/" style={navLinkStyle}>Home</NavLink></li>
               <li><NavLink to="/menu" style={navLinkStyle}>Menu</NavLink></li>
-              <li>
-                <NavLink to="/checkout" style={navLinkStyle}>
-                  Checkout
-                  {cartCount > 0 && <span style={styles.cartBadge}>{cartCount}</span>}
-                </NavLink>
-              </li>
+              {isLoggedIn && (
+                <li>
+                  <NavLink to="/checkout" style={navLinkStyle}>
+                    Checkout
+                    {cartCount > 0 && <span style={styles.cartBadge}>{cartCount}</span>}
+                  </NavLink>
+                </li>
+              )}
             </>
           )}
-          
+
           {isLoggedIn ? (
             <UserBadge user={user} onLogout={logout} />
           ) : (

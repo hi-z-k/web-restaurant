@@ -28,7 +28,6 @@ function App() {
           {isAdmin ? (
             <>
               <Route path="/admin" element={<Admin />} />
-              <Route path="/admin/menu" element={<div>Menu Management</div>} />
               <Route path="/" element={<Navigate to="/admin" replace />} />
               <Route path="/menu" element={<Navigate to="/admin" replace />} />
               <Route path="/checkout" element={<Navigate to="/admin" replace />} />
@@ -37,8 +36,7 @@ function App() {
             <>
               <Route path="/" element={<Home />} />
               <Route path="/menu" element={<Menu />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/admin" element={<Navigate to="/login" replace />} />
+              <Route path="/checkout" element={isLoggedIn ? <Checkout /> : <Navigate to="/login" replace />} />              <Route path="/admin" element={<Navigate to="/login" replace />} />
               <Route path="/admin/menu" element={<Navigate to="/login" replace />} />
             </>
           )}

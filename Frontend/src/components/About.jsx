@@ -8,7 +8,7 @@ const About = () => {
   return (
     <section style={styles.section} id="about">
       <div className="about-img">
-        <img src="img/restaurant-interior.jpg" alt="Dining Area" style={styles.img} />
+        <img src="https://s.hdnux.com/photos/01/44/62/50/26421770/5/1920x0.jpg" alt="Dining Area" style={styles.img} />
       </div>
       <div className="about-text">
         <h3 style={{ fontFamily: '"Bebas Neue", cursive', color: 'var(--main-color)', fontSize: '1.8rem' }}>Our Story</h3>
@@ -16,7 +16,6 @@ const About = () => {
         <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '2rem' }}>
           Founded in 2023, The Bistro was born out of a passion for fusion cuisine. We believe that dining is an art form.
         </p>
-        <a href="#reservation" className="btn">Visit Us Today</a>
       </div>
     </section>
   );

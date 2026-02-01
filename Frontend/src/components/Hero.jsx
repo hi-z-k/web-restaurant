@@ -33,6 +33,22 @@ const Hero = () => {
       color: 'var(--text-muted)', 
       marginBottom: '2.5rem', 
       fontStyle: 'italic' 
+    },
+    imageWrapper: {
+      position: 'relative',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    img: {
+      width: '100%',
+      maxWidth: '500px',
+      aspectRatio: '1/1',
+      objectFit: 'cover',
+      borderRadius: '50%',
+      border: '8px solid rgba(147, 112, 219, 0.1)',
+      boxShadow: '0 0 50px rgba(147, 112, 219, 0.3)',
+      animation: 'float 6s ease-in-out infinite'
     }
   };
 
@@ -49,7 +65,7 @@ const Hero = () => {
         <Link to="/menu" className="btn">Explore Menu</Link>
       </div>
       <div className="home-img">
-        <img src="img/hero-plate.png" alt="Signature Dish" style={{ width: '100%' }} />
+        <img src="https://tb-static.uber.com/prod/image-proc/processed_images/1a113b4c496b92a67f40c222d9d7b257/db809eadd12d21eb61044e0f3bf7c9b7.jpeg" alt="Signature Dish" style={{ width: '100%' }} />
       </div>
     </section>
   );

@@ -56,8 +56,9 @@ const styles = {
     color: '#fff',
     background: status === 'delivered' ? '#333' : 'var(--main-color)'
   }),
-  loadingText: { textAlign: 'center', opacity: 0.5 },
-  emptyText: { opacity: 0.4, fontStyle: 'italic', fontSize: '0.9rem' }
+  loadingText: { textAlign: 'center', opacity: 0.5, marginTop: '20px' },
+  emptyText: { opacity: 0.4, fontStyle: 'italic', fontSize: '0.9rem' },
+  qtySpan: { color: '#fff', fontSize: '1.2rem', minWidth: '20px' } // Added from your previous MenuItem logic if needed
 };
 
 const StatCard = ({ label, value }) => (
@@ -68,7 +69,7 @@ const StatCard = ({ label, value }) => (
 );
 
 const Order = ({ order, onUpdate }) => {
-  const googleMapsUrl = `https://www.google.com/maps?q=${order.coordinates?.lat},${order.coordinates?.lng}`;
+  const googleMapsUrl = `http://maps.google.com/?q=${order.coordinates?.lat},${order.coordinates?.lng}`;
 
   return (
     <div style={styles.orderCard(order.status)}>
@@ -121,17 +122,24 @@ const Admin = () => {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [loading, setLoading] = useState(true);
   const dateInputRef = useRef(null);
+  const isFetching = useRef(false);
 
   const loadOrders = useCallback(async (showLoading = false) => {
+    if (isFetching.current) return;
     if (showLoading) setLoading(true);
+    
+    isFetching.current = true;
     const cleanDate = selectedDate.replace(/-/g, '');
+    
     try {
-      const data = await fetchOrdersByDate(cleanDate);
+      // Passes 'admin' role for the backend 'user-role' check
+      const data = await fetchOrdersByDate(cleanDate, 'admin');
       setOrders(data);
     } catch (error) {
-      console.error(error);
+      console.error("Sync Error:", error);
     } finally {
       setLoading(false);
+      isFetching.current = false;
     }
   }, [selectedDate]);
 
@@ -140,17 +148,18 @@ const Admin = () => {
   }, [loadOrders]);
 
   useEffect(() => {
-    const interval = setInterval(() => loadOrders(false), 15000);
+    const interval = setInterval(() => loadOrders(false), 5000);
     return () => clearInterval(interval);
   }, [loadOrders]);
 
   const handleUpdateStatus = async (id, currentStatus) => {
     const newStatus = currentStatus === 'active' ? 'delivered' : 'active';
     try {
-      await updateOrderStatus(id, newStatus);
       setOrders(prev => prev.map(o => o.id === id ? { ...o, status: newStatus } : o));
+      await updateOrderStatus(id, newStatus);
     } catch (err) {
-      alert("Sync failed");
+      alert("Sync failed",err);
+      loadOrders(false);
     }
   };
 
@@ -191,7 +200,7 @@ const Admin = () => {
       </div>
 
       {loading ? (
-        <div style={styles.loadingText}>Syncing...</div>
+        <div style={styles.loadingText}>Initial Sync...</div>
       ) : (
         <div style={styles.listsContainer}>
           <OrderList 
