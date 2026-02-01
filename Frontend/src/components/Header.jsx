@@ -3,77 +3,24 @@ import { NavLink, Link } from 'react-router-dom';
 import { RestaurantContext } from '../context/RestaurantContext.js';
 import { CartContext } from '../context/CartContext.js';
 import { AuthContext } from '../context/AuthContext.js';
+import '../styles/Header.css';
 
 const UserBadge = ({ user, onLogout }) => {
   const isAdmin = user?.role === 'admin';
-  const badgeStyles = {
-    container: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '12px',
-      marginLeft: '15px',
-      padding: '6px 14px',
-      borderRadius: '30px',
-      background: 'rgba(255, 255, 255, 0.03)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      transition: '0.3s'
-    },
-    avatar: {
-      width: '35px',
-      height: '35px',
-      borderRadius: '50%',
-      background: 'var(--main-color)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: '#fff',
-      fontWeight: 'bold',
-      fontSize: '1rem',
-      boxShadow: '0 0 15px rgba(147, 112, 219, 0.3)'
-    },
-    details: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center'
-    },
-    name: {
-      color: '#fff',
-      fontSize: '0.85rem',
-      fontWeight: '600',
-      lineHeight: '1.2'
-    },
-    phone: {
-      color: 'var(--text-muted)',
-      fontSize: '0.7rem',
-      letterSpacing: '0.5px'
-    },
-    logout: {
-      background: 'transparent',
-      border: 'none',
-      color: '#ff4d4d',
-      cursor: 'pointer',
-      fontSize: '0.7rem',
-      padding: '0',
-      textDecoration: 'none',
-      marginTop: '2px',
-      opacity: '0.8',
-      textAlign: 'left'
-    }
-  };
-
-const firstName = user?.name ? user.name.split(' ')[0] : 'User';
+  const firstName = user?.name ? user.name.split(' ')[0] : 'User';
   const initial = firstName.charAt(0).toUpperCase();
 
   return (
-    <li style={badgeStyles.container}>
-      <div style={badgeStyles.avatar}>{initial}</div>
-      <div style={badgeStyles.details}>
-        <span style={badgeStyles.name}>{firstName} {isAdmin && "(Admin)"}</span>
-        {!isAdmin && <span style={badgeStyles.phone}>{user?.phone}</span>}
-        <button onClick={onLogout} style={badgeStyles.logout}>Logout</button>
+    <li className="user-badge-container">
+      <div className="user-avatar">{initial}</div>
+      <div className="user-details">
+        <span className="user-name">{firstName} {isAdmin && "(Admin)"}</span>
+        {!isAdmin && <span className="user-phone">{user?.phone}</span>}
+        <button onClick={onLogout} className="logout-btn">Logout</button>
       </div>
     </li>
-  );};
+  );
+};
 
 const Header = () => {
   const config = useContext(RestaurantContext);
@@ -82,67 +29,25 @@ const Header = () => {
 
   const cartCount = cart.reduce((acc, item) => acc + item.count, 0);
 
-  const styles = {
-    header: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      background: 'var(--secondary-bg)',
-      width: '100%',
-      zIndex: 1000,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      backdropFilter: 'blur(10px)',
-      padding: '25px 12%',
-      borderBottom: '1px solid rgba(147, 112, 219, 0.2)'
-    },
-    navbar: {
-      display: 'flex',
-      alignItems: 'center',
-      listStyle: 'none',
-      margin: 0,
-      padding: 0
-    },
-    navLink: ({ isActive }) => ({
-      color: isActive ? 'var(--main-color)' : '#fff',
-      fontSize: '1rem',
-      fontWeight: '500',
-      padding: '10px 20px',
-      transition: '0.3s',
-      textDecoration: 'none',
-      borderBottom: isActive ? '2px solid var(--main-color)' : 'none'
-    }),
-    cartBadge: {
-      background: 'var(--main-color)',
-      color: '#fff',
-      borderRadius: '50%',
-      padding: '2px 8px',
-      fontSize: '0.8rem',
-      marginLeft: '5px',
-      verticalAlign: 'middle'
-    }
-  };
-
   if (!config) return null;
 
   const [resFirstName, ...resRest] = config.name.split(' ');
   const resRestOfName = resRest.join(' ');
 
   return (
-    <header style={styles.header}>
+    <header className="main-header">
       <Link to="/" className="logo">
         {resFirstName}<span>{resRestOfName}</span>
       </Link>
       
       <nav>
-        <ul style={styles.navbar}>
-          <li><NavLink to="/" style={styles.navLink}>Home</NavLink></li>
-          <li><NavLink to="/menu" style={styles.navLink}>Menu</NavLink></li>
+        <ul className="navbar-list">
+          <li><NavLink to="/" className="nav-link">Home</NavLink></li>
+          <li><NavLink to="/menu" className="nav-link">Menu</NavLink></li>
           <li>
-            <NavLink to="/checkout" style={styles.navLink}>
+            <NavLink to="/checkout" className="nav-link">
               Checkout
-              {cartCount > 0 && <span style={styles.cartBadge}>{cartCount}</span>}
+              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
             </NavLink>
           </li>
           
@@ -150,7 +55,7 @@ const Header = () => {
             <UserBadge user={user} onLogout={logout} />
           ) : (
             <li>
-              <NavLink to="/login" style={styles.navLink}>
+              <NavLink to="/login" className="nav-link">
                 Login
               </NavLink>
             </li>

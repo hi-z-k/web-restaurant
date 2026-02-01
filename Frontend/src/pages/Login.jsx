@@ -2,26 +2,22 @@ import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { loginUser, registerUser, checkEmailExists } from '../services/api';
+import '../styles/Login.css';
 
-const API_URL = 'http://localhost:5000'; 
-
-const FormField = ({ label, name, type, placeholder, value, onChange }) => {
-  const fieldStyles = {
-    group: { marginBottom: '15px' },
-    label: { display: 'block', marginBottom: '8px', color: '#ccc', fontSize: '0.85rem' },
-    input: {
-      width: '100%', padding: '12px 15px', background: '#0a0a1a', border: '1px solid #333',
-      borderRadius: '6px', color: '#fff', fontSize: '1rem', outline: 'none'
-    }
-  };
-
-  return (
-    <div style={fieldStyles.group}>
-      <label style={fieldStyles.label}>{label}</label>
-      <input name={name} type={type} placeholder={placeholder} value={value} onChange={onChange} required style={fieldStyles.input} />
-    </div>
-  );
-};
+const FormField = ({ label, name, type, placeholder, value, onChange }) => (
+  <div className="form-field-group">
+    <label className="form-field-label">{label}</label>
+    <input 
+      name={name} 
+      type={type} 
+      placeholder={placeholder} 
+      value={value} 
+      onChange={onChange} 
+      required 
+      className="form-field-input" 
+    />
+  </div>
+);
 
 const Login = () => {
   const { login } = useContext(AuthContext);
@@ -30,25 +26,6 @@ const Login = () => {
   const [formData, setFormData] = useState({
     firstName: '', lastName: '', email: '', phone: '', password: '', confirmPassword: ''
   });
-
-  const styles = {
-    container: { display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '90vh', padding: '40px 20px' },
-    formBox: {
-      background: 'var(--secondary-bg)', padding: '40px', borderRadius: '12px', width: '100%',
-      maxWidth: isLogin ? '450px' : '650px', border: '1px solid rgba(255,255,255,0.05)',
-      boxShadow: '0 10px 30px rgba(0,0,0,0.5)', transition: 'max-width 0.4s ease'
-    },
-    title: { fontFamily: '"Bebas Neue", cursive', fontSize: '2.5rem', color: 'var(--main-color)', textAlign: 'center', marginBottom: '30px' },
-    gridContainer: { display: 'grid', gap: '10px 20px', gridTemplateColumns: isLogin ? '1fr' : '1fr 1fr' },
-    btn: {
-      width: '100%', padding: '15px', background: 'var(--main-color)', color: '#fff',
-      border: 'none', borderRadius: '6px', fontSize: '1.2rem', fontFamily: '"Bebas Neue", cursive',
-      cursor: 'pointer', marginTop: '20px'
-    },
-    toggleContainer: { marginTop: '20px', textAlign: 'center', fontSize: '0.9rem' },
-    toggleLink: { color: 'var(--main-color)', cursor: 'pointer', marginLeft: '5px', fontWeight: 'bold' },
-    toggleText: { color: '#aaa' }
-  };
 
   const fields = isLogin 
     ? [
@@ -66,7 +43,7 @@ const Login = () => {
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (isLogin) {
@@ -101,18 +78,24 @@ const handleSubmit = async (e) => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.formBox}>
-        <h2 style={styles.title}>{isLogin ? 'Login' : 'Register'}</h2>
+    <div className="auth-container">
+      <div className={`auth-form-box ${!isLogin ? 'register-mode' : ''}`}>
+        <h2 className="auth-title">{isLogin ? 'Login' : 'Register'}</h2>
         <form onSubmit={handleSubmit}>
-          <div style={styles.gridContainer}>
-            {fields.map((f) => <FormField key={f.name} {...f} value={formData[f.name]} onChange={handleChange} />)}
+          <div className="auth-grid">
+            {fields.map((f) => (
+              <FormField key={f.name} {...f} value={formData[f.name]} onChange={handleChange} />
+            ))}
           </div>
-          <button type="submit" style={styles.btn}>{isLogin ? 'Enter Account' : 'Create Account'}</button>
+          <button type="submit" className="auth-btn">
+            {isLogin ? 'Enter Account' : 'Create Account'}
+          </button>
         </form>
-        <div style={styles.toggleContainer}>
-          <span style={styles.toggleText}>{isLogin ? "New here?" : "Joined us before?"}</span>
-          <span style={styles.toggleLink} onClick={() => setIsLogin(!isLogin)}>{isLogin ? 'Create an account' : 'Sign in here'}</span>
+        <div className="auth-toggle-container">
+          <span className="auth-toggle-text">{isLogin ? "New here?" : "Joined us before?"}</span>
+          <span className="auth-toggle-link" onClick={() => setIsLogin(!isLogin)}>
+            {isLogin ? 'Create an account' : 'Sign in here'}
+          </span>
         </div>
       </div>
     </div>

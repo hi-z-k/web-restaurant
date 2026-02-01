@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import '../styles/PaginationContainer.css';
 
 const PaginationContainer = ({ components, itemsPerPage }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -10,51 +11,16 @@ const PaginationContainer = ({ components, itemsPerPage }) => {
   const indexOfFirstItem = indexOfLastItem - perPage;
   const currentItems = components.slice(indexOfFirstItem, indexOfLastItem);
 
-  const styles = {
-    grid: {
-      display: 'grid',
-      gridTemplateColumns: `repeat(3, 1fr)`,
-      gap: '30px',
-      minHeight: '450px',
-      alignItems: 'start'
-    },
-    pagination: {
-      display: 'flex',
-      justifyContent: 'center',
-      marginTop: '40px',
-      gap: '10px'
-    },
-    btn: {
-      padding: '8px 16px',
-      background: 'var(--secondary-bg)',
-      color: '#fff',
-      border: '1px solid var(--main-color)',
-      cursor: 'pointer'
-    },
-    active: {
-      background: 'var(--main-color)',
-      color: '#fff',
-      padding: '8px 16px',
-      border: '1px solid var(--main-color)',
-      fontWeight: 'bold',
-      cursor: 'default'
-    },
-    disabled: {
-      opacity: 0.5,
-      cursor: 'not-allowed'
-    }
-  };
-
   return (
     <div>
-      <div style={styles.grid}>
+      <div className="pagination-grid">
         {currentItems}
       </div>
 
       {totalPages > 1 && (
-        <div style={styles.pagination}>
+        <div className="pagination-controls">
           <button 
-            style={{...styles.btn, ...(currentPage === 1 ? styles.disabled : {})}} 
+            className="pagination-btn" 
             disabled={currentPage === 1}
             onClick={() => setCurrentPage(prev => prev - 1)}
           >
@@ -67,7 +33,7 @@ const PaginationContainer = ({ components, itemsPerPage }) => {
               <button
                 key={pageNum}
                 onClick={() => setCurrentPage(pageNum)}
-                style={currentPage === pageNum ? styles.active : styles.btn}
+                className={`pagination-btn ${currentPage === pageNum ? 'active' : ''}`}
               >
                 {pageNum}
               </button>
@@ -75,7 +41,7 @@ const PaginationContainer = ({ components, itemsPerPage }) => {
           })}
 
           <button 
-            style={{...styles.btn, ...(currentPage === totalPages ? styles.disabled : {})}} 
+            className="pagination-btn"
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(prev => prev - 1 + 2)}
           >

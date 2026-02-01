@@ -3,6 +3,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import '../styles/MapPicker.css';
 
 let DefaultIcon = L.icon({
   iconUrl: icon,
@@ -13,40 +14,6 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const MapPicker = ({ location, setLocation }) => {
-  const styles = {
-    wrapper: { 
-      position: 'relative', 
-      height: '100%', 
-      width: '100%' 
-    },
-    map: { 
-      height: '100%', 
-      width: '100%', 
-      borderRadius: '12px' 
-    },
-    coordsBox: {
-      position: 'absolute',
-      bottom: '15px',
-      left: '15px',
-      zIndex: 1000,
-      background: 'rgba(10, 10, 26, 0.85)',
-      padding: '10px 15px',
-      borderRadius: '8px',
-      border: '1px solid var(--main-color)',
-      color: '#fff',
-      fontSize: '0.85rem',
-      fontFamily: 'monospace',
-      backdropFilter: 'blur(5px)',
-      boxShadow: '0 4px 15px rgba(0,0,0,0.4)',
-      pointerEvents: 'none'
-    },
-    label: {
-      color: 'var(--main-color)',
-      marginRight: '5px',
-      fontWeight: 'bold'
-    }
-  };
-
   const MapEvents = () => {
     useMapEvents({
       click(e) {
@@ -57,16 +24,16 @@ const MapPicker = ({ location, setLocation }) => {
   };
 
   return (
-    <div style={styles.wrapper}>
-      <div style={styles.coordsBox}>
-        <div><span style={styles.label}>LAT:</span> {location.lat.toFixed(6)}</div>
-        <div><span style={styles.label}>LNG:</span> {location.lng.toFixed(6)}</div>
+    <div className="map-picker-wrapper">
+      <div className="coords-overlay">
+        <div><span className="coords-label">LAT:</span> {location.lat.toFixed(6)}</div>
+        <div><span className="coords-label">LNG:</span> {location.lng.toFixed(6)}</div>
       </div>
 
       <MapContainer 
         center={[location.lat, location.lng]} 
         zoom={15} 
-        style={styles.map}
+        className="map-picker-container"
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <MapEvents />

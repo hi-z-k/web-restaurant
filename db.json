@@ -15,4 +15,96 @@
     { "name": "Dulet", "price": 350, "ingredients": "Tripe, Liver, Beef, Mitmita, Spiced Butter", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkhcTAsXpy3EwEmCc6Y1rH6Flj4bidK3XItQ&s" },
     { "name": "Injera Fitfit", "price": 220, "ingredients": "Injera, Tomato, Jalapeño, Red Onion, Lemon", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJ5dGzqmaHGuxM7aTumgwZup9BJEGpkIiQtg&s" }
   ],
+  "users": [
+    {
+      "id": "u-001",
+      "name": "Admin User",
+      "email": "admin@test.com",
+      "password": "admin123",
+      "phone": "+251 911 00 00 00",
+      "role": "admin"
+    },
+    {
+      "id": "u-002",
+      "name": "Abebe Bekele",
+      "email": "abebe@test.com",
+      "password": "user123",
+      "phone": "+251 912 00 00 00",
+      "role": "user"
+    },
+    {
+      "id": "fe02",
+      "name": "a b",
+      "email": "hizkeal@gmail.com",
+      "phone": "324354657869",
+      "password": "123",
+      "role": "user"
+    },
+    {
+      "id": "c35f",
+      "name": "Abebe Kebede",
+      "email": "abebe@gmail.com",
+      "phone": "0912342333",
+      "password": "0912342333",
+      "role": "user"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord-001",
+      "date": "20260201",
+      "customerName": "Abebe Bekele",
+      "itemsSummary": "1x Special Kitfo, 2x Shiro Wat",
+      "total": 950,
+      "status": "delivered"
+    },
+    {
+      "id": "ord-002",
+      "date": "20260201",
+      "customerName": "Sara Tesfaye",
+      "itemsSummary": "2x Doro Wat, 1x Beyaynet",
+      "total": 1400,
+      "status": "active"
+    },
+    {
+      "id": "ord-003",
+      "date": "20260201",
+      "customerName": "Kebede Michael",
+      "itemsSummary": "1x Beef Shekla Tibs",
+      "total": 600,
+      "status": "active"
+    },
+    {
+      "id": "ord-004",
+      "date": "20260201",
+      "customerName": "Marta Hailu",
+      "itemsSummary": "3x Misir Wat, 1x Injera Fitfit",
+      "total": 1060,
+      "status": "active"
+    },
+    {
+      "id": "ord-005",
+      "date": "20260131",
+      "customerName": "Dawit Isaac",
+      "itemsSummary": "1x Derek Tibs",
+      "total": 580,
+      "status": "active"
+    },
+    {
+      "id": "ord-006",
+      "date": "20260201",
+      "customerName": "Helen Yusuf",
+      "itemsSummary": "1x Asa Tibs, 2x Butecha",
+      "total": 780,
+      "status": "delivered"
+    },
+    {
+      "id": "ord-007",
+      "date": "20260201",
+      "customerName": "Tewodros Kassahun",
+      "itemsSummary": "1x Dulet, 1x Gomen be Siga",
+      "total": 730,
+      "status": "delivered"
+    }
+  ]
 }

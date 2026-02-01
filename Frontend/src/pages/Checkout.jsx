@@ -4,6 +4,7 @@ import { CartContext } from '../context/CartContext';
 import { createOrder } from '../services/api';
 import MapPicker from '../components/MapPicker';
 import CartReceipt from '../components/CartReceipt';
+import '../styles/Checkout.css';
 
 const Checkout = () => {
     const { cart, clearCart } = useContext(CartContext);
@@ -12,7 +13,7 @@ const Checkout = () => {
     const [addInfo, setAddInfo] = useState('');
     const deliveryFee = 50;
 
-    const handlePlaceOrder = async (e) => {
+    const handlePlaceOrder = (e) => {
         e.preventDefault();
 
         const summaryStr = cart.map(i => `${i.count}x ${i.name}`).join(', ');
@@ -39,24 +40,41 @@ const Checkout = () => {
     };
 
     if (cart.length === 0) return (
-        <div style={{ textAlign: 'center', padding: '100px', color: '#fff' }}>
-            <h2>Your cart is empty.</h2>
+        <div className="checkout-empty-message">
+            <h2 className="checkout-section-title">Your cart is empty.</h2>
         </div>
     );
 
     return (
-        <div style={{ padding: '60px 10%', display: 'grid', gap: '30px', color: '#fff', maxWidth: '1400px', margin: '0 auto' }}>
-            <CartReceipt cart={cart} deliveryFee={deliveryFee} />
-            <MapPicker location={location} setLocation={setLocation} />
-            <textarea 
-                style={{ width: '100%', padding: '15px', borderRadius: '8px' }}
-                value={addInfo} 
-                onChange={(e) => setAddInfo(e.target.value)} 
-                placeholder="Additional instructions..."
-            />
-            <button onClick={handlePlaceOrder} style={{ padding: '20px', background: 'orange', cursor: 'pointer' }}>
-                CONFIRM ORDER
-            </button>
+        <div className="checkout-page">
+            <div className="checkout-receipt-section">
+                <h2 className="checkout-section-title">Order Summary</h2>
+                <CartReceipt cart={cart} deliveryFee={deliveryFee} />
+            </div>
+
+            <div className="checkout-map-section">
+                <h2 className="checkout-section-title">Delivery Point</h2>
+                <div className="checkout-map-wrapper">
+                    <MapPicker location={location} setLocation={setLocation} />
+                </div>
+            </div>
+
+            <div className="checkout-info-section">
+                <h2 className="checkout-section-title">Additional Info</h2>
+                <label className="checkout-label">Order Preferences & Instructions</label>
+                <textarea
+                    className="checkout-textarea"
+                    placeholder="Allergy requests, delivery notes, or kitchen preferences..."
+                    value={addInfo}
+                    onChange={(e) => setAddInfo(e.target.value)}
+                />
+            </div>
+
+            <div className="checkout-button-section">
+                <button onClick={handlePlaceOrder} className="checkout-btn">
+                    CONFIRM ORDER
+                </button>
+            </div>
         </div>
     );
 };

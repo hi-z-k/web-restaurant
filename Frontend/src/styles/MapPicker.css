@@ -1,0 +1,34 @@
+.map-picker-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.map-picker-container {
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+}
+
+.coords-overlay {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  z-index: 1000;
+  background: rgba(10, 10, 26, 0.85);
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--main-color);
+  color: #fff;
+  font-size: 0.85rem;
+  font-family: monospace;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+.coords-label {
+  color: var(--main-color);
+  margin-right: 5px;
+  font-weight: bold;
+}
