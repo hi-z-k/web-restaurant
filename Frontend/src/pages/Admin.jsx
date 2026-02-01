@@ -31,23 +31,28 @@ const styles = {
     padding: '20px', 
     borderRadius: '10px', 
     display: 'flex', 
-    justifyContent: 'space-between', 
-    alignItems: 'center', 
+    flexDirection: 'column',
+    gap: '15px',
     marginBottom: '15px', 
     borderLeft: `6px solid ${status === 'delivered' ? '#4caf50' : 'var(--main-color)'}`,
     opacity: status === 'delivered' ? 0.7 : 1 
   }),
+  cardHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' },
   customerInfo: { display: 'flex', flexDirection: 'column', gap: '4px' },
   customerName: { margin: 0 },
-  itemsSummary: { margin: 0, fontSize: '0.9rem', color: '#bbb' },
-  priceTag: { color: 'var(--main-color)', fontWeight: 'bold' },
+  customerPhone: { fontSize: '0.85rem', color: 'var(--main-color)', textDecoration: 'none', fontWeight: 'bold' },
+  itemsSummary: { margin: 0, fontSize: '0.9rem', color: '#bbb', fontStyle: 'italic' },
+  preferenceBox: { background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '6px', fontSize: '0.85rem', border: '1px solid rgba(255,255,255,0.05)' },
+  actionRow: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px' },
+  mapLink: { color: '#fff', fontSize: '0.8rem', textDecoration: 'underline', opacity: 0.6 },
+  priceTag: { color: 'var(--main-color)', fontWeight: 'bold', fontSize: '1.1rem' },
   statusBtn: (status) => ({ 
-    padding: '12px 24px', 
+    padding: '10px 20px', 
     borderRadius: '6px', 
     border: 'none', 
     cursor: 'pointer', 
     fontFamily: '"Bebas Neue", cursive', 
-    fontSize: '1.1rem', 
+    fontSize: '1rem', 
     color: '#fff',
     background: status === 'delivered' ? '#333' : 'var(--main-color)'
   }),
@@ -62,21 +67,41 @@ const StatCard = ({ label, value }) => (
   </div>
 );
 
-const Order = ({ order, onUpdate }) => (
-  <div style={styles.orderCard(order.status)}>
-    <div style={styles.customerInfo}>
-      <h3 style={styles.customerName}>{order.customerName}</h3>
+const Order = ({ order, onUpdate }) => {
+  const googleMapsUrl = `https://www.google.com/maps?q=${order.coordinates?.lat},${order.coordinates?.lng}`;
+
+  return (
+    <div style={styles.orderCard(order.status)}>
+      <div style={styles.cardHeader}>
+        <div style={styles.customerInfo}>
+          <h3 style={styles.customerName}>{order.customerName}</h3>
+          <a href={`tel:${order.customerPhone}`} style={styles.customerPhone}>📞 {order.customerPhone}</a>
+        </div>
+        <span style={styles.priceTag}>{order.total.toLocaleString()} ETB</span>
+      </div>
+
       <p style={styles.itemsSummary}>{order.itemsSummary}</p>
-      <span style={styles.priceTag}>{order.total} ETB</span>
+
+      {order.preferences && (
+        <div style={styles.preferenceBox}>
+          <strong>Note:</strong> {order.preferences}
+        </div>
+      )}
+
+      <div style={styles.actionRow}>
+        <a href={googleMapsUrl} target="_blank" rel="noreferrer" style={styles.mapLink}>
+          📍 View Delivery Map
+        </a>
+        <button 
+          onClick={() => onUpdate(order.id, order.status)}
+          style={styles.statusBtn(order.status)}
+        >
+          {order.status === 'active' ? 'Mark Delivered' : 'Re-open'}
+        </button>
+      </div>
     </div>
-    <button 
-      onClick={() => onUpdate(order.id, order.status)}
-      style={styles.statusBtn(order.status)}
-    >
-      {order.status === 'active' ? 'Mark Delivered' : 'Re-open'}
-    </button>
-  </div>
-);
+  );
+};
 
 const OrderList = ({ title, orders, onUpdate, emptyMessage }) => (
   <div>
@@ -176,7 +201,7 @@ const Admin = () => {
             emptyMessage="No pending orders." 
           />
           <OrderList 
-            title="delivered" 
+            title="Delivered" 
             orders={deliveredOrders} 
             onUpdate={handleUpdateStatus} 
             emptyMessage="Nothing delivered yet." 

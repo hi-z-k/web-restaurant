@@ -61,7 +61,7 @@ const UserBadge = ({ user, onLogout }) => {
     }
   };
 
-const firstName = user?.name ? user.name.split(' ')[0] : 'User';
+  const firstName = user?.name ? user.name.split(' ')[0] : 'User';
   const initial = firstName.charAt(0).toUpperCase();
 
   return (
@@ -73,7 +73,8 @@ const firstName = user?.name ? user.name.split(' ')[0] : 'User';
         <button onClick={onLogout} style={badgeStyles.logout}>Logout</button>
       </div>
     </li>
-  );};
+  );
+};
 
 const Header = () => {
   const config = useContext(RestaurantContext);
@@ -81,6 +82,7 @@ const Header = () => {
   const { user, isLoggedIn, logout } = useContext(AuthContext);
 
   const cartCount = cart.reduce((acc, item) => acc + item.count, 0);
+  const isAdmin = isLoggedIn && user?.role === 'admin';
 
   const styles = {
     header: {
@@ -104,15 +106,6 @@ const Header = () => {
       margin: 0,
       padding: 0
     },
-    navLink: ({ isActive }) => ({
-      color: isActive ? 'var(--main-color)' : '#fff',
-      fontSize: '1rem',
-      fontWeight: '500',
-      padding: '10px 20px',
-      transition: '0.3s',
-      textDecoration: 'none',
-      borderBottom: isActive ? '2px solid var(--main-color)' : 'none'
-    }),
     cartBadge: {
       background: 'var(--main-color)',
       color: '#fff',
@@ -123,6 +116,16 @@ const Header = () => {
       verticalAlign: 'middle'
     }
   };
+
+  const navLinkStyle = ({ isActive }) => ({
+    color: isActive ? 'var(--main-color)' : '#fff',
+    fontSize: '1rem',
+    fontWeight: '500',
+    padding: '10px 20px',
+    transition: '0.3s',
+    textDecoration: 'none',
+    borderBottom: isActive ? '2px solid var(--main-color)' : '2px solid transparent'
+  });
 
   if (!config) return null;
 
@@ -137,20 +140,28 @@ const Header = () => {
       
       <nav>
         <ul style={styles.navbar}>
-          <li><NavLink to="/" style={styles.navLink}>Home</NavLink></li>
-          <li><NavLink to="/menu" style={styles.navLink}>Menu</NavLink></li>
-          <li>
-            <NavLink to="/checkout" style={styles.navLink}>
-              Checkout
-              {cartCount > 0 && <span style={styles.cartBadge}>{cartCount}</span>}
-            </NavLink>
-          </li>
+          {isAdmin ? (
+            <>
+              <li><NavLink to="/admin" style={navLinkStyle}>Dashboard</NavLink></li>
+            </>
+          ) : (
+            <>
+              <li><NavLink to="/" style={navLinkStyle}>Home</NavLink></li>
+              <li><NavLink to="/menu" style={navLinkStyle}>Menu</NavLink></li>
+              <li>
+                <NavLink to="/checkout" style={navLinkStyle}>
+                  Checkout
+                  {cartCount > 0 && <span style={styles.cartBadge}>{cartCount}</span>}
+                </NavLink>
+              </li>
+            </>
+          )}
           
           {isLoggedIn ? (
             <UserBadge user={user} onLogout={logout} />
           ) : (
             <li>
-              <NavLink to="/login" style={styles.navLink}>
+              <NavLink to="/login" style={navLinkStyle}>
                 Login
               </NavLink>
             </li>

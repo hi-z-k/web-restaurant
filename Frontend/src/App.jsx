@@ -11,12 +11,10 @@ import About from './components/About';
 import Login from './pages/Login';
 import Admin from './pages/Admin';
 
-const AdminRoute = ({ children }) => {
-  const { isAdmin, isLoggedIn } = useContext(AuthContext);
-  return isLoggedIn && isAdmin ? children : <Navigate to="/" replace />;
-};
-
 function App() {
+  const { user, isLoggedIn } = useContext(AuthContext);
+  const isAdmin = isLoggedIn && user?.role === 'admin';
+
   const styles = {
     appContainer: { display: 'flex', flexDirection: 'column', minHeight: '100vh' },
     mainContent: { flex: 1, marginTop: '80px' }
@@ -27,12 +25,27 @@ function App() {
       <Header />
       <main style={styles.mainContent}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/menu" element={<Menu />} />
+          {isAdmin ? (
+            <>
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/menu" element={<div>Menu Management</div>} />
+              <Route path="/" element={<Navigate to="/admin" replace />} />
+              <Route path="/menu" element={<Navigate to="/admin" replace />} />
+              <Route path="/checkout" element={<Navigate to="/admin" replace />} />
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<Home />} />
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/admin" element={<Navigate to="/login" replace />} />
+              <Route path="/admin/menu" element={<Navigate to="/login" replace />} />
+            </>
+          )}
+
           <Route path="/about" element={<About />} />
-          <Route path="/checkout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
+          <Route path="*" element={<Navigate to={isAdmin ? "/admin" : "/"} replace />} />
         </Routes>
       </main>
       <Footer />
