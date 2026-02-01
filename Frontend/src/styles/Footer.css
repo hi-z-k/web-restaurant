@@ -1,0 +1,64 @@
+.main-footer {
+  padding: 80px 12% 40px;
+  background: var(--secondary-bg);
+  border-top: 2px solid var(--main-color);
+  margin-top: 100px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-areas: "brand contact";
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px 6rem;
+  align-items: start;
+}
+
+.footer-brand {
+  grid-area: brand;
+}
+
+.footer-contact {
+  grid-area: contact;
+}
+
+.footer-tagline {
+  color: var(--text-muted);
+  margin-top: 15px;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.footer-heading {
+  font-family: "Bebas Neue", cursive;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.footer-contact-text {
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 60px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.footer-social-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.footer-social-icon {
+  color: var(--main-color);
+  font-size: 1.5rem;
+  transition: 0.3s;
+}

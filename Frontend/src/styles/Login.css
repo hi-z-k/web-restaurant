@@ -1,0 +1,105 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  padding: 40px 20px;
+}
+
+.auth-form-box {
+  background: var(--secondary-bg);
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 450px; /* Default for Login */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: max-width 0.4s ease;
+}
+
+/* Expanded width for Register mode */
+.auth-form-box.register-mode {
+  max-width: 650px;
+}
+
+.auth-title {
+  font-family: "Bebas Neue", cursive;
+  font-size: 2.5rem;
+  color: var(--main-color);
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-grid {
+  display: grid;
+  gap: 10px 20px;
+  grid-template-columns: 1fr;
+}
+
+/* Two columns for the registration grid */
+.register-mode .auth-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 15px;
+  background: var(--main-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  font-family: "Bebas Neue", cursive;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+
+.auth-btn:hover {
+  filter: brightness(1.1);
+}
+
+.auth-toggle-container {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.auth-toggle-text {
+  color: #aaa;
+}
+
+.auth-toggle-link {
+  color: var(--main-color);
+  cursor: pointer;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+/* Form Field Component Styles */
+.form-field-group {
+  margin-bottom: 15px;
+}
+
+.form-field-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #ccc;
+  font-size: 0.85rem;
+}
+
+.form-field-input {
+  width: 100%;
+  padding: 12px 15px;
+  background: #0a0a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-field-input:focus {
+  border-color: var(--main-color);
+}

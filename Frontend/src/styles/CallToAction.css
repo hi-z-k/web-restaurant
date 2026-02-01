@@ -1,0 +1,52 @@
+.cta-section {
+  padding: 100px 12%;
+  text-align: center;
+  border-top: 1px solid rgba(147, 112, 219, 0.1);
+}
+
+.cta-title {
+  font-family: "Bebas Neue", cursive;
+  font-size: 3.5rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  letter-spacing: 2px;
+}
+
+.cta-text {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+}
+
+.cta-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.cta-primary-button {
+  padding: 18px 45px;
+  background: var(--main-color);
+  color: #fff;
+  font-family: "Bebas Neue", cursive;
+  font-size: 1.5rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 10px 20px rgba(147, 112, 219, 0.2);
+}
+
+.cta-secondary-button {
+  padding: 18px 45px;
+  background: transparent;
+  color: #fff;
+  font-family: "Bebas Neue", cursive;
+  font-size: 1.5rem;
+  border-radius: 4px;
+  border: 2px solid var(--main-color);
+  cursor: pointer;
+  transition: var(--transition);
+}

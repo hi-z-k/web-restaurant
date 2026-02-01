@@ -123,6 +123,14 @@
       "phone": "324354657869",
       "password": "123",
       "role": "user"
+    },
+    {
+      "id": "c35f",
+      "name": "Abebe Kebede",
+      "email": "abebe@gmail.com",
+      "phone": "0912342333",
+      "password": "0912342333",
+      "role": "user"
     }
   ],
   "orders": [

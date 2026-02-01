@@ -1,0 +1,35 @@
+.pagination-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  min-height: 450px;
+  align-items: start;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  gap: 10px;
+}
+
+.pagination-btn {
+  padding: 8px 16px;
+  background: var(--secondary-bg);
+  color: #fff;
+  border: 1px solid var(--main-color);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.pagination-btn.active {
+  background: var(--main-color);
+  color: #fff;
+  font-weight: bold;
+  cursor: default;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
