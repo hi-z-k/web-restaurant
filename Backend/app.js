@@ -1,4 +1,3 @@
-import http from 'http';
 import { ALLOWED_ORIGINS } from './utils/config.js';
 import { userRoutes } from './routes/userRoutes.js';
 import { menuRoutes } from './routes/menuRoutes.js';

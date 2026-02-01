@@ -2,7 +2,7 @@ import { RestaurantContext } from './RestaurantContext.js';
 
 export const RestaurantProvider = ({ children }) => {
   const config = {
-    name: "Hizkeal Restaurant",
+    name: "Hizkeal Cafe",
     tagline: "Crafting memories, one plate at a time.",
     email: "helloworld@gmail.com"
   };
