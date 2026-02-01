@@ -1,4 +1,7 @@
-const API_URL = 'http://localhost:5000';
+const API_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://ethio-delight.onrender.com'
+    : 'http://localhost:5000';
 
 const sendRequest = async (url, options = {}) => {
   const response = await fetch(url, options);
