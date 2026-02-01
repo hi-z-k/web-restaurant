@@ -75,3 +75,12 @@ main {
   50% { transform: translateY(-20px); }
   100% { transform: translateY(0px); }
 }
+
+.form-input:not(:placeholder-shown):invalid {
+  border-color: #ff4d4d !important;
+}
+
+form:invalid .submit-btn {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
